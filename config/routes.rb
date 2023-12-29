@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get '/patients/dashboard', to: 'patients#dashboard', as: 'patient_dashboard'
+  get '/specialization/:id', to: 'patients#specialization'
+
   devise_for :users, controllers: {
         confirmations: 'users/confirmations',
         passwords: 'users/passwords',
