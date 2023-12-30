@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     if resource.role_type == "Patient"
       patient_dashboard_path
     elsif resource.role_type == "Admin"
-      root_path
+      admin_dashboard_path
     end
   end
 end

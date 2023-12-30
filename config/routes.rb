@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'admins/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
   get '/patients/dashboard', to: 'patients#dashboard', as: 'patient_dashboard'
   get '/specialization/:id', to: 'patients#specialization'
 
