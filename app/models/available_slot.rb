@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: available_slots
+#
+#  id              :bigint           not null, primary key
+#  status          :boolean          default(TRUE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  availability_id :bigint           not null
+#  doctor_id       :bigint           not null
+#  slot_id         :bigint           not null
+#
+# Indexes
+#
+#  index_available_slots_on_availability_id        (availability_id)
+#  index_available_slots_on_doctor_id              (doctor_id)
+#  index_available_slots_on_doctor_id_and_slot_id  (doctor_id,slot_id) UNIQUE
+#  index_available_slots_on_slot_id                (slot_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (availability_id => availabilities.id)
+#  fk_rails_...  (doctor_id => doctors.id)
+#  fk_rails_...  (slot_id => slots.id)
+#
+class AvailableSlot < ApplicationRecord
+  belongs_to :doctor
+  belongs_to :slot
+  belongs_to :availability
+end

@@ -1,0 +1,14 @@
+<%= current_user.role.id %>
+
+<%= form_with url: '/doctor/set_availability' do |form| %>
+  <%= form.label :start, "Start Time" %>
+  <%= form.time_field :start %>
+  <br>
+  <br>
+  <%= form.label :end, "End Time" %>
+  <%= form.time_field :end %>
+
+  <br>
+  <br>
+  <%= form.submit %>
+<% end %>

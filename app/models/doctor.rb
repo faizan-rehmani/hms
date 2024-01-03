@@ -20,4 +20,12 @@
 class Doctor < ApplicationRecord
   include Role
   belongs_to :specialization
+
+  #for associated availabilities and slots
+  has_many :availabilities
+  has_many :available_slots
+
+  # for managing appointment
+  has_many :appointments
+  has_many :patients, through: :appointments
 end

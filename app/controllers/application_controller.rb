@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
       patient_dashboard_path
     elsif resource.role_type == "Admin"
       admin_dashboard_path
+    elsif resource.role_type == "Doctor"
+      doctor_dashboard_path
     end
   end
 end

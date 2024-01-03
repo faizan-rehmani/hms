@@ -8,4 +8,8 @@
 #
 class Patient < ApplicationRecord
   include Role
+
+  # for managing the appointment
+  has_many :appointments
+  has_many :doctors, through: :appointments
 end

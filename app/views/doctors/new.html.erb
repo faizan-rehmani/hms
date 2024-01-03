@@ -1,0 +1,57 @@
+<%= form_with model: @user, url: '/doctors' do |f| %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :gender %><br />
+    <%= f.select :gender, ["Male", "Female", "Transgender", "Not to respond"] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dob, "Date-Of-Birth" %><br />
+    <%= f.date_field :dob %>
+  </div>
+
+  <div class="field">
+    <%= f.label :photo, "Upload an Image" %><br />
+    <%= f.file_field :photo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password,  autocomplete: "new-password"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :qualification %><br />
+    <%= f.text_field :qualification %>
+  </div>
+
+  <div class="field">
+    <%= f.label :work_experience %><br />
+    <%= f.number_field :work_experience, min: 0 %>
+  </div>
+
+  <div>
+    <%= f.collection_select :specialization_id, Specialization.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

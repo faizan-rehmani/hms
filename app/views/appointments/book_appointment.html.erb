@@ -1,1 +1,15 @@
-<h1>hello to book an appointment</h1>
+<h1>Doctor detail</h1>
+<%= @user.name %>
+<%= @user.email %>
+<%= @user.gender%>
+
+<h2>Doctor Specific Details</h2>
+<%= @doctor.qualification %>
+<%= @doctor.work_experience %>
+<%= @doctor.specialization.name%>
+
+<h3>Slot Detail</h3>
+<p>Start time: <%= @slot.start_time %> </p>
+<p>End time: <%= @slot.end_time %> </p>
+
+<%= button_to "Book Appointment", params: { id: @selected_slot.id_value },remote: true %>

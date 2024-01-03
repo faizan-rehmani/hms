@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_29_060618) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,41 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_060618) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "patient_id", null: false
+    t.bigint "doctor_id", null: false
+    t.integer "status"
+    t.bigint "slot_id", null: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
+    t.index ["patient_id"], name: "index_appointments_on_patient_id"
+    t.index ["slot_id"], name: "index_appointments_on_slot_id"
+  end
+
+  create_table "availabilities", force: :cascade do |t|
+    t.bigint "doctor_id", null: false
+    t.string "start_time"
+    t.string "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_availabilities_on_doctor_id"
+  end
+
+  create_table "available_slots", force: :cascade do |t|
+    t.bigint "doctor_id", null: false
+    t.bigint "slot_id", null: false
+    t.bigint "availability_id", null: false
+    t.boolean "status", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["availability_id"], name: "index_available_slots_on_availability_id"
+    t.index ["doctor_id", "slot_id"], name: "index_available_slots_on_doctor_id_and_slot_id", unique: true
+    t.index ["doctor_id"], name: "index_available_slots_on_doctor_id"
+    t.index ["slot_id"], name: "index_available_slots_on_slot_id"
+  end
+
   create_table "doctors", force: :cascade do |t|
     t.string "qualification"
     t.integer "work_experience"
@@ -57,6 +92,22 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_060618) do
   end
 
   create_table "patients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "specialization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["specialization_id"], name: "index_programs_on_specialization_id"
+  end
+
+  create_table "slots", force: :cascade do |t|
+    t.string "start_time"
+    t.string "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -93,5 +144,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_060618) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appointments", "doctors"
+  add_foreign_key "appointments", "patients"
+  add_foreign_key "appointments", "slots"
+  add_foreign_key "availabilities", "doctors"
+  add_foreign_key "available_slots", "availabilities"
+  add_foreign_key "available_slots", "doctors"
+  add_foreign_key "available_slots", "slots"
   add_foreign_key "doctors", "specializations"
+  add_foreign_key "programs", "specializations"
 end

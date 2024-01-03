@@ -1,0 +1,11 @@
+<%= current_user.role %>
+<% @availabilities.each do |elem| %>
+  <a href="/book_appointment?id=<%= elem.id%>">
+  <div>
+    <p><%= elem.start_time %></p>
+    <p><%= elem.end_time %></p>
+    <p><%= elem.status ? "Available" : "Booked" %></p>
+  </div>
+  </a>
+  <hr>
+<% end %>

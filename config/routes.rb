@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
+  get '/availability', to: 'doctors#availability'
   get 'admins/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
+  get 'doctors/dashboard', to: 'doctors#dashboard', as: 'doctor_dashboard'
   get '/patients/dashboard', to: 'patients#dashboard', as: 'patient_dashboard'
   get '/specialization/:id', to: 'patients#specialization'
-
+  get '/doctors/new', to: 'doctors#new'
+  post '/doctors', to: 'doctors#create'
+  
+  match '/add_programs', to: 'admins#add_programs', via: [:get, :post]
+  match '/doctor/set_availability', to: 'doctors#set_availability', via: [:get, :post]
   devise_for :users, controllers: {
         confirmations: 'users/confirmations',
         passwords: 'users/passwords',
@@ -12,7 +18,7 @@ Rails.application.routes.draw do
         sessions: 'users/sessions'
       }
   root 'welcome#index'
-  get '/book_appointment', to: 'appointments#book_appointment', as: 'book_appointment'
+  match '/book_appointment', to: 'appointments#book_appointment', via: [:get, :post], as: 'book_appointment'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

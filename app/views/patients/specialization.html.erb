@@ -2,4 +2,6 @@
   <%= doctor.user.name %>
   <%= doctor.user.email %>
   <%= doctor.work_experience %>
+
+  <%= button_to "View Availability", '/availability', params: {id: doctor.id}, method: :get %>
 <% end %>

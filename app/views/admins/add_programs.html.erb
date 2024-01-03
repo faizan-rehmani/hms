@@ -1,0 +1,25 @@
+<%= form_with model: @program, url: '/add_programs' do |f| %>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :poster, "Upload an Image" %><br />
+    <%= f.file_field :poster %>
+  </div>
+
+  <div>
+    <%= f.label :specialization_id, "For What Specialization"%> <br>
+    <%= f.collection_select :specialization_id, Specialization.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
