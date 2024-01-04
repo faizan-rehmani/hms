@@ -52,3 +52,38 @@
 #   Slot.create!(start_time: time, end_time: time1)
 #   time = time1
 # end
+
+# added medicines 
+
+# require 'date'
+
+# # Function to generate random expiry date based on MFD
+# def generate_expiry_date(mfd)
+#     mfd_date = Date.parse(mfd)
+#     expiry_date = mfd_date + rand(100..1000) # Expiry within 100 to 1000 days
+#     expiry_date.strftime('%Y-%m-%d')
+# end
+
+# # List of possible medicine names, manufacturers, and dosage forms
+# medicine_names = ["Paracetamol", "Aspirin", "Lisinopril", "Atorvastatin", "Metformin", "Simvastatin", "Losartan",
+#                   "Levothyroxine", "Furosemide", "Ibuprofen", "Amoxicillin", "Cough Syrup", "Omeprazole", "Prednisone",
+#                   "Metoprolol", "Gabapentin", "Amlodipine", "Hydrochlorothiazide", "Warfarin", "Azithromycin"]
+
+# manufacturers = ["ABC Pharmaceuticals", "XYZ Pharma", "Medico Corp", "MediLife Inc.", "CureMed Enterprises", "HealWell Labs"]
+
+# dosage_forms = ["tablet", "capsule", "liquid"]
+
+# # Generate dummy data for medicines
+# dummy_medicines = []
+# (1..200).each do |i|  # Generate 200 medicine entries
+#     medicine = {
+#         name: medicine_names.sample,
+#         manufacturer: manufacturers.sample,
+#         form: dosage_forms.sample,
+#         mfd: "20#{rand(20..23)}-#{rand(1..12).to_s.rjust(2, '0')}-#{rand(1..28).to_s.rjust(2, '0')}",
+#         expiry: "",
+#         mg: [100, 200, 500].sample  # Random mg for tablets/capsules
+#     }
+#     medicine[:expiry] = generate_expiry_date(medicine[:mfd]) 
+#     Medicine.create!(medicine)
+# end

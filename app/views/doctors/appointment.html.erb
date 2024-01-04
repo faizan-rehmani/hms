@@ -1,0 +1,8 @@
+<h1>Appointments Detail </h1>
+
+<% @appointments.each do |appointment| %>
+  <p>Date: <%= appointment.date %></p>
+  <p>Id: <%= appointment.id %></p>
+  <p>status: <%= appointment.status %></p>
+  <%= link_to "Prescripe", "appointment/#{appointment.id}/prescribe" %>
+<% end %>

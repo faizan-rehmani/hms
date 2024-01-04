@@ -17,3 +17,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+
+// for adding field for prescription 
+document.addEventListener('DOMContentLoaded', function () {
+  // const tableBody = document.querySelector('#prescriptionTable tbody');
+  const tableBody = document.querySelector('#table_body');
+
+  // Add row dynamically on 'Add' button click
+  tableBody.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('addAction')) {
+      const row = target.parentNode.parentNode.cloneNode(true);
+      const addActionBtn = row.querySelector('.addAction');
+
+      row.children[0].children[0].value = target.parentNode.parentNode.children[0].children[0].value
+      row.children[3].children[0].value = target.parentNode.parentNode.children[3].children[0].value
+      
+      addActionBtn.textContent = 'Remove';
+      addActionBtn.classList.remove('addAction');
+      addActionBtn.classList.add('removeAction');
+      const inputs = target.parentNode.parentNode.querySelectorAll('input');
+      inputs.forEach(input => {
+        if (input.tagName === 'INPUT') {
+          input.value = '';
+        }
+      });
+      tableBody.insertAdjacentElement('afterbegin', row);
+    }
+  });
+
+  // Remove row dynamically on 'Remove' button click
+  tableBody.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('removeAction')) {
+      const row = target.parentNode.parentNode;
+      console.log(row)
+      tableBody.removeChild(row);
+    }
+  });
+  
+});
+//end of adding field in prescription

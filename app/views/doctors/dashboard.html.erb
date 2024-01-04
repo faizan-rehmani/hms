@@ -1,3 +1,4 @@
 <h1>Doctor dashboard </h1>
-
-<%= link_to "Add Availability", '/doctor/set_availability' %>
+<%= link_to "view Availability", "/doctor/availabilities" %> <br><br>
+<%= link_to "Add Availability", '/doctor/set_availability' %> <br><br>
+<%= link_to "See Appointments", "/doctor/appointments?id=#{current_user.id}" %>

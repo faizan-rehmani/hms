@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   get '/patients/dashboard', to: 'patients#dashboard', as: 'patient_dashboard'
   get '/specialization/:id', to: 'patients#specialization'
   get '/doctors/new', to: 'doctors#new'
+  get '/doctor/appointments', to: 'doctors#appointment'
   post '/doctors', to: 'doctors#create'
   
   match '/add_programs', to: 'admins#add_programs', via: [:get, :post]
   match '/doctor/set_availability', to: 'doctors#set_availability', via: [:get, :post]
+  get '/doctor/availabilities', to: 'doctors#availabilities'
   devise_for :users, controllers: {
         confirmations: 'users/confirmations',
         passwords: 'users/passwords',
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
         sessions: 'users/sessions'
       }
   root 'welcome#index'
+  match '/doctor/appointment/:id/prescribe', to: "doctors#new_prescription", via: [:get, :post]
   match '/book_appointment', to: 'appointments#book_appointment', via: [:get, :post], as: 'book_appointment'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

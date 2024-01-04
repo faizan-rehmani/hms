@@ -1,0 +1,34 @@
+<%= form_with url: "/doctor/appointment/#{@appointment}/prescribe" do |form| %>
+  <table id="prescriptionTable">
+    <thead>
+      <tr>
+        <th>Medicine</th>
+        <th>Duration</th>
+        <th>When to Take</th>
+        <th>Before Meal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="table_body">
+      <tr class="prescriptionRow">
+        <td>
+          <%= form.collection_select name="prescriptions[][medicine_id]", Medicine.all, :id, :name %>
+        </td>
+        <td>
+          <%= form.text_field :duration, name: "prescriptions[][duration]" %>
+        </td>
+        <td><input type="text" class="whenToTakeInput" name="prescriptions[][when_to_take]"/></td>
+        <td>
+          <select class="beforeMealDropdown" name="prescriptions[][before_meal]">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </td>
+        <td><button type="button" class="addAction">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="field">
+    <%= form.submit %>
+  </div>
+<% end %>

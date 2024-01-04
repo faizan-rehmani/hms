@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_04_114003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
   create_table "appointments", force: :cascade do |t|
     t.bigint "patient_id", null: false
     t.bigint "doctor_id", null: false
-    t.integer "status"
+    t.integer "status", default: 0
     t.bigint "slot_id", null: false
     t.datetime "date"
     t.datetime "created_at", null: false
@@ -91,9 +91,41 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
     t.index ["specialization_id"], name: "index_doctors_on_specialization_id"
   end
 
+  create_table "medicine_prescriptions", force: :cascade do |t|
+    t.bigint "medicine_id", null: false
+    t.bigint "prescription_id", null: false
+    t.integer "duration"
+    t.string "when_to_take"
+    t.boolean "before_meal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medicine_id"], name: "index_medicine_prescriptions_on_medicine_id"
+    t.index ["prescription_id"], name: "index_medicine_prescriptions_on_prescription_id"
+  end
+
+  create_table "medicines", force: :cascade do |t|
+    t.string "name"
+    t.string "manufacturer"
+    t.integer "form"
+    t.datetime "mfd"
+    t.datetime "expiry"
+    t.integer "mg"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "patients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "prescriptions", force: :cascade do |t|
+    t.text "instruction"
+    t.integer "duration"
+    t.bigint "appointment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_prescriptions_on_appointment_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -120,9 +152,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string "shift"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "shift"
+    t.string "post"
   end
 
   create_table "users", force: :cascade do |t|
@@ -152,5 +185,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_075110) do
   add_foreign_key "available_slots", "doctors"
   add_foreign_key "available_slots", "slots"
   add_foreign_key "doctors", "specializations"
+  add_foreign_key "medicine_prescriptions", "medicines"
+  add_foreign_key "medicine_prescriptions", "prescriptions"
+  add_foreign_key "prescriptions", "appointments"
   add_foreign_key "programs", "specializations"
 end

@@ -6,6 +6,36 @@ class DoctorsController < ApplicationController
   def dashboard
   end
 
+  def new_prescription
+    if request.get?
+      @prescription = Prescription.new
+      @appointment = params[:id]
+    end
+    if request.post?
+      @appointment = Appointment.find(params[:id])
+      # instruction , duration, appintment_id 
+      @prescription = @appointment.create_prescription(instruction: "don't drink alcohol and eat healthy food", duration: 5)
+      params[:prescriptions].pop
+      medicines = params[:prescriptions]
+
+      medicines.each do |medicine|
+        @prescription.medicine_prescriptions.create!(before_meal: medicine[:before_meal], duration: medicine[:duration], when_to_take: medicine[:when_to_take], medicine_id: medicine[:medicine_id])
+      end
+      @appointment.status = 'done'
+      @appointment.save
+      redirect_to "/doctor/appointments?id=#{current_user.id}", notice: "Prescribed Successfully"
+    end
+  end
+
+
+  def appointment
+    @appointments = Appointment.where(doctor_id: current_user.role.id)
+  end
+
+  def availabilities
+    @availabilities = Availability.where(doctor_id: current_user.role.id)
+  end
+
   def new
     @user = User.new
   end

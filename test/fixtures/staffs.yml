@@ -3,7 +3,8 @@
 # Table name: staffs
 #
 #  id         :bigint           not null, primary key
-#  shift      :string
+#  post       :string
+#  shift      :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

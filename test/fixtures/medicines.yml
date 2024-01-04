@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: medicines
+#
+#  id           :bigint           not null, primary key
+#  expiry       :datetime
+#  form         :integer
+#  manufacturer :string
+#  mfd          :datetime
+#  mg           :integer
+#  name         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+one:
+  name: MyString
+  manufacturer: MyString
+  form: 1
+  mfd: 2024-01-03 16:02:56
+  expiry: 2024-01-03 16:02:56
+  mg: 1
+
+two:
+  name: MyString
+  manufacturer: MyString
+  form: 1
+  mfd: 2024-01-03 16:02:56
+  expiry: 2024-01-03 16:02:56
+  mg: 1
