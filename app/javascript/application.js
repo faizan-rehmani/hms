@@ -56,6 +56,47 @@ document.addEventListener('DOMContentLoaded', function () {
       tableBody.removeChild(row);
     }
   });
-  
+
 });
 //end of adding field in prescription
+
+//start of report add
+document.addEventListener('DOMContentLoaded', function () {
+  // const tableBody = document.querySelector('#prescriptionTable tbody');
+  const tableBody = document.querySelector('#table_body_report');
+
+  // Add row dynamically on 'Add' button click
+  tableBody.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('addReport')) {
+      const row = target.parentNode.parentNode.cloneNode(true);
+      const addActionBtn = row.querySelector('.addReport');
+
+      row.children[0].children[0].value = target.parentNode.parentNode.children[0].children[0].value
+      // row.children[3].children[0].value = target.parentNode.parentNode.children[3].children[0].value
+      
+      addActionBtn.textContent = 'Remove';
+      addActionBtn.classList.remove('addReport');
+      addActionBtn.classList.add('removeReport');
+      // const inputs = target.parentNode.parentNode.querySelectorAll('input');
+      // inputs.forEach(input => {
+      //   if (input.tagName === 'INPUT') {
+      //     input.value = '';
+      //   }
+      // });
+      tableBody.insertAdjacentElement('afterbegin', row);
+    }
+  });
+
+  // Remove row dynamically on 'Remove' button click
+  tableBody.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('removeReport')) {
+      const row = target.parentNode.parentNode;
+      console.log(row)
+      tableBody.removeChild(row);
+    }
+  });
+  
+});
+// end of report add

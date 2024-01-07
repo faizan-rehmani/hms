@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_04_114003) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_114003) do
     t.index ["slot_id"], name: "index_available_slots_on_slot_id"
   end
 
+  create_table "diseases", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "symptom"
+    t.string "cause"
+    t.bigint "specialization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["specialization_id"], name: "index_diseases_on_specialization_id"
+  end
+
   create_table "doctors", force: :cascade do |t|
     t.string "qualification"
     t.integer "work_experience"
@@ -89,6 +100,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_114003) do
     t.datetime "updated_at", null: false
     t.bigint "specialization_id", null: false
     t.index ["specialization_id"], name: "index_doctors_on_specialization_id"
+  end
+
+  create_table "lab_reports", force: :cascade do |t|
+    t.string "name"
+    t.bigint "specialization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["specialization_id"], name: "index_lab_reports_on_specialization_id"
+  end
+
+  create_table "lap_report_prescriptions", force: :cascade do |t|
+    t.bigint "prescription_id", null: false
+    t.bigint "lab_report_id", null: false
+    t.datetime "date"
+    t.bigint "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lab_report_id"], name: "index_lap_report_prescriptions_on_lab_report_id"
+    t.index ["prescription_id"], name: "index_lap_report_prescriptions_on_prescription_id"
+    t.index ["staff_id"], name: "index_lap_report_prescriptions_on_staff_id"
   end
 
   create_table "medicine_prescriptions", force: :cascade do |t|
@@ -184,7 +215,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_114003) do
   add_foreign_key "available_slots", "availabilities"
   add_foreign_key "available_slots", "doctors"
   add_foreign_key "available_slots", "slots"
+  add_foreign_key "diseases", "specializations"
   add_foreign_key "doctors", "specializations"
+  add_foreign_key "lab_reports", "specializations"
+  add_foreign_key "lap_report_prescriptions", "lab_reports"
+  add_foreign_key "lap_report_prescriptions", "prescriptions"
+  add_foreign_key "lap_report_prescriptions", "staffs"
   add_foreign_key "medicine_prescriptions", "medicines"
   add_foreign_key "medicine_prescriptions", "prescriptions"
   add_foreign_key "prescriptions", "appointments"

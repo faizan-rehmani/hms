@@ -12,15 +12,24 @@ class DoctorsController < ApplicationController
       @appointment = params[:id]
     end
     if request.post?
+      puts "=============="
+      puts params
+      puts "==============="
       @appointment = Appointment.find(params[:id])
-      # instruction , duration, appintment_id 
       @prescription = @appointment.create_prescription(instruction: "don't drink alcohol and eat healthy food", duration: 5)
       params[:prescriptions].pop
+      params[:reports].pop
       medicines = params[:prescriptions]
+      reports = params[:reports]
 
       medicines.each do |medicine|
         @prescription.medicine_prescriptions.create!(before_meal: medicine[:before_meal], duration: medicine[:duration], when_to_take: medicine[:when_to_take], medicine_id: medicine[:medicine_id])
       end
+
+      reports.each do |report|
+        @prescription.lap_report_prescriptions.create(lab_report_id: params[:report_id])
+      end
+
       @appointment.status = 'done'
       @appointment.save
       redirect_to "/doctor/appointments?id=#{current_user.id}", notice: "Prescribed Successfully"

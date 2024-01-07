@@ -23,4 +23,8 @@ class Prescription < ApplicationRecord
   # medicine and prescription relation
   has_many :medicine_prescriptions
   has_many :medicines, through: :medicine_prescriptions
+
+  # lab report and prescription relation
+  has_many :lap_report_prescriptions
+  has_many :lab_reports, through: :lap_report_prescriptions
 end

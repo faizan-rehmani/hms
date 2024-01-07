@@ -87,3 +87,56 @@
 #     medicine[:expiry] = generate_expiry_date(medicine[:mfd]) 
 #     Medicine.create!(medicine)
 # end
+
+
+# lab_reports = [
+#   { name: 'Lipid Profile', specialization: 'Cardiology' },
+#   { name: 'Complete Blood Count (CBC)', specialization: 'Hematology' },
+#   { name: 'Blood Glucose Test', specialization: 'Endocrinology' },
+#   { name: 'Urinalysis', specialization: 'Nephrology/Urology' },
+#   { name: 'Liver Function Tests', specialization: 'Gastroenterology' },
+#   { name: 'Thyroid Function Test', specialization: 'Endocrinology' },
+#   { name: 'Electrocardiogram (ECG/EKG)', specialization: 'Cardiology' },
+#   { name: 'Stool Culture', specialization: 'Gastroenterology' },
+#   { name: 'Coagulation Panel', specialization: 'Hematology' },
+#   { name: 'Microbial Sensitivity Testing', specialization: 'Microbiology' },
+#   { name: 'Tumor Marker Tests', specialization: 'Oncology' },
+#   { name: 'Bone Density Test', specialization: 'Rheumatology/Orthopedics' },
+#   { name: 'Pulmonary Function Tests', specialization: 'Pulmonology' },
+#   { name: 'Hormone Panel', specialization: 'Endocrinology' },
+#   { name: 'Skin Patch Test', specialization: 'Dermatology' },
+#   { name: 'Troponin Test', specialization: 'Cardiology' },
+#   { name: 'Echocardiography', specialization: 'Cardiology' },
+#   { name: 'Holter Monitor', specialization: 'Cardiology' },
+#   { name: 'Cardiac Catheterization', specialization: 'Cardiology' },
+#   { name: 'Cardiac MRI', specialization: 'Cardiology' },
+#   # Add more cardiology-related tests here...
+# ]
+
+# lab_reports.each do |report|
+#   LabReport.create!(name: report[:name],
+#   specialization: ((Specialization.find_by_name(report[:specialization]) || Specialization.find_by_name('Cardiology'))
+#   ))
+# end
+
+names = ['Hypertension', 'Type 2 Diabetes', 'Arthritis', 'Asthma', 'Influenza', 'Migraine', 'Osteoporosis', 'Rheumatoid Arthritis', 'Bronchitis', 'Eczema']
+descriptions = ['Description 1', 'Description 2', 'Description 3', 'Description 4', 'Description 5']
+symptoms = ['Symptom 1', 'Symptom 2', 'Symptom 3', 'Symptom 4', 'Symptom 5']
+causes = ['Cause 1', 'Cause 2', 'Cause 3', 'Cause 4', 'Cause 5']
+specializations = ['Cardiology', 'Endocrinology', 'Rheumatology', 'Pulmonology', 'Neurology']
+
+# Generate dummy data for diseases
+dummy_diseases = []
+100.times do |index|
+  dummy_diseases << {
+    name: names.sample,
+    description: descriptions.sample,
+    symptoms: symptoms.sample,
+    causes: causes.sample,
+    specialization: specializations.sample
+  }
+end
+
+dummy_diseases.each do |disease|
+  Disease.create!(name: disease[:name], description: disease[:description], symptom: disease[:symptoms], cause: disease[:causes], specialization: (Specialization.find_by_name(disease[:specialization]) || Specialization.find_by_name('Cardiology')))
+end
