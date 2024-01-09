@@ -10,4 +10,6 @@
 #
 class Staff < ApplicationRecord
   include Role
+
+  enum :shift, [:morning, :day, :night]
 end

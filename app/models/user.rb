@@ -29,4 +29,6 @@ class User < ApplicationRecord
   
   has_one_attached :photo
   delegated_type :role, types: %w[ Admin Staff Patient Doctor ], dependent: :destroy
+  # for managing reviews of individuals user
+  has_many :reviews
 end

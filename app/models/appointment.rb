@@ -32,4 +32,7 @@ class Appointment < ApplicationRecord
 
   # for prescription we only have one prescription associate with it
   has_one :prescription
+
+  # for managing reviews on an appointment
+  has_many :reviews
 end

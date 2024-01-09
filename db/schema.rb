@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_09_055848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
     t.index ["doctor_id", "slot_id"], name: "index_available_slots_on_doctor_id_and_slot_id", unique: true
     t.index ["doctor_id"], name: "index_available_slots_on_doctor_id"
     t.index ["slot_id"], name: "index_available_slots_on_slot_id"
+  end
+
+  create_table "beds", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_beds_on_room_id"
+  end
+
+  create_table "complaints", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "appointment_id", null: false
+    t.integer "issue"
+    t.datetime "date"
+    t.integer "location"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_complaints_on_appointment_id"
+    t.index ["user_id"], name: "index_complaints_on_user_id"
   end
 
   create_table "diseases", force: :cascade do |t|
@@ -168,6 +189,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
     t.index ["specialization_id"], name: "index_programs_on_specialization_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "user_id", null: false
+    t.integer "satisfaction"
+    t.text "reason"
+    t.integer "cleanliness"
+    t.text "suggestions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_reviews_on_appointment_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "floor"
+    t.string "ward"
+    t.boolean "has_multiple_beds"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "slots", force: :cascade do |t|
     t.string "start_time"
     t.string "end_time"
@@ -215,6 +257,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
   add_foreign_key "available_slots", "availabilities"
   add_foreign_key "available_slots", "doctors"
   add_foreign_key "available_slots", "slots"
+  add_foreign_key "beds", "rooms"
+  add_foreign_key "complaints", "appointments"
+  add_foreign_key "complaints", "users"
   add_foreign_key "diseases", "specializations"
   add_foreign_key "doctors", "specializations"
   add_foreign_key "lab_reports", "specializations"
@@ -225,4 +270,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_05_090411) do
   add_foreign_key "medicine_prescriptions", "prescriptions"
   add_foreign_key "prescriptions", "appointments"
   add_foreign_key "programs", "specializations"
+  add_foreign_key "reviews", "appointments"
+  add_foreign_key "reviews", "users"
 end
